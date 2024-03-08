@@ -24,9 +24,25 @@
       const D = { x: 250, y: 200 };
 
       const ctx = myCanvas.getContext("2d");
-      let t = 0;
+      //mouse initial pint = (0,0)
+      const mouse = {x:0, y:0};
+      //function to update the mouse coordinate
+      document.onmousemove = (event) => {
+        mouse.x = event.x;
+        mouse.y = event.y;
+      }
+
+
+
       animate();
       function animate() {
+        const radius = 50;
+        //point A = 50 px above the mouse 
+        //pont B = 50 px below the mouse 
+        A.x = mouse.x;
+        A.y = mouse.y - radius;
+        B.x = mouse.x;
+        B.y = mouse.y + radius;
         ctx.clearRect(0, 0, myCanvas.width, myCanvas.height);
         ctx.beginPath();
         ctx.moveTo(A.x, A.y);
@@ -40,22 +56,10 @@
         drawDot(C, "C");
         drawDot(D, "D");
 
-        const M = {
-          x: lerp(A.x, B.x, t),
-          y: lerp(A.y, B.y, t),
-        };
-        const N = {
-          x: lerp(C.x, D.x, t),
-          y: lerp(C.y, D.y, t),
-        };
-        
-        drawDot(M, "M", t<0 || t >1);
-        drawDot(N,"N", t<0 || t >1);
 
         const I = getIntersection(A,B,C,D);
         drawDot(I, "I");
         
-        t += 0.005;
         requestAnimationFrame(animate);
       }
       
