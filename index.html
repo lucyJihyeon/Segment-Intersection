@@ -61,6 +61,11 @@
 
         const I = getIntersection(A,B,C,D);
         drawDot(I, "I");
+        ctx.beginPath();
+        ctx.rect(myCanvas.width/2 , 0, I.bottom/100,10);
+        ctx.fill();
+        
+
         
         requestAnimationFrame(animate);
       }
@@ -71,7 +76,8 @@
         const t = top / bottom;
         return {
             x:lerp(A.x,B.x,t),
-            y:lerp(A.y,B.y,t)
+            y:lerp(A.y,B.y,t),
+            bottom:bottom
         }
       }
 
