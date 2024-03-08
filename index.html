@@ -24,17 +24,35 @@
       const D = { x: 250, y: 200 };
 
       const ctx = myCanvas.getContext("2d");
-      ctx.beginPath();
-      ctx.moveTo(A.x, A.y);
-      ctx.lineTo(B.x, B.y);
-      ctx.moveTo(C.x, C.y);
-      ctx.lineTo(D.x, D.y);
-      ctx.stroke();
+      let t = 0;
+      animate();
+      function animate() {
+        ctx.clearRect(0, 0, myCanvas.width, myCanvas.height);
+        ctx.beginPath();
+        ctx.moveTo(A.x, A.y);
+        ctx.lineTo(B.x, B.y);
+        ctx.moveTo(C.x, C.y);
+        ctx.lineTo(D.x, D.y);
+        ctx.stroke();
 
-      drawDot(A, "A");
-      drawDot(B, "B");
-      drawDot(C, "C");
-      drawDot(D, "D");
+        drawDot(A, "A");
+        drawDot(B, "B");
+        drawDot(C, "C");
+        drawDot(D, "D");
+
+        const M = {
+          x: lerp(A.x, B.x, t),
+          y: lerp(A.y, B.y, t),
+        };
+        drawDot(M, "M");
+        t += 0.005;
+        requestAnimationFrame(animate);
+      }
+
+
+      function lerp(A, B, t) {
+        return A + (B - A) * t;
+      }
 
       function drawDot(point, label) {
         ctx.beginPath();
